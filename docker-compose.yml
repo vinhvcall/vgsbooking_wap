@@ -1,0 +1,50 @@
+version: '3'
+services:
+  vgsbooking_wap:
+    container_name: vgsbooking_wap 
+    image: vgsbooking_wap:lastest
+    #build: 
+    #  context: .
+    #  dockerfile: web.Dockerfile
+    # volumes:
+    #   - /etc/localtime:/etc/localtime:ro
+    #   - ./api.env:/var/www/html/.env
+    environment:
+        APPLICATION_ENV: Dev
+    networks:
+      net:
+        ipv4_address: 10.22.104.5
+
+  vgsbooking_wap_database:
+    restart: always
+    image: mariadb:10.7
+    container_name: vgsbooking_wap_database
+    environment:
+        MYSQL_ROOT_PASSWORD: Dym2D4d2qk6y5R9vZT
+        MYSQL_DATABASE: BOOKING_WAP
+        MYSQL_USER: BOOKING_WAP
+        MYSQL_PASSWORD: 4BShUBs45Sz67MC4SF
+    volumes:
+      - mysql:/var/lib/mysql/
+    networks:
+      net:
+        ipv4_address: 10.22.104.3
+
+  vgsbooking_wap_redis:
+    restart: always
+    container_name: vgsbooking_wap_redis
+    image: redis:alpine
+    command: redis-server --requirepass ATnpMgnVPjDJu8gFps
+    networks:
+      net:
+        ipv4_address: 10.22.104.6
+
+volumes:
+  mysql:
+
+networks:
+ net:
+  ipam:
+   driver: default
+   config:
+   - subnet: 10.22.104.0/27

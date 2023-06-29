@@ -1,0 +1,19 @@
+t=`date +%F_%H%M` ;
+i=vgsbooking_wap  ;
+p=golfervn-190503 ;
+
+docker exec -i $i sh -c 'find /var/www/html/logs/ /root/.npm/_logs/ -type f -mtime +0 -delete'
+
+echo   docker pull asia.gcr.io/$p/$i:$t
+docker commit $i $i:lastest
+docker tag    $i:lastest asia.gcr.io/$p/$i:$t
+docker push   asia.gcr.io/$p/$i:$t
+
+exit;
+docker commit vhandicaplanding_web_1  vhandicaplanding_web_1:lastest
+docker tag vhandicaplanding_web_1:lastest   asia.gcr.io/golfervn-190503/vhandicaplanding_web:$t
+docker push asia.gcr.io/golfervn-190503/vhandicaplanding_web:$t
+
+exit;
+2. docker tag busybox  asia.gcr.io/my-project/busybox
+3. docker push              asia.gcr.io/my-project/busybox 
